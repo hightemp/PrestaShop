@@ -270,7 +270,10 @@ class CookieCore
 			//printf("\$content = %s<br />", $content);
 			
 			/* Get cookie checksum */
-			$checksum = crc32($this->_iv.substr($content, 0, strrpos($content, '¤') + 2));
+			$tmpTab = explode('¤', $content);
+			array_pop($tmpTab);
+			$content_for_checksum = implode('¤', $tmpTab).'¤';
+			$checksum = crc32($this->_iv.$content_for_checksum);
 			//printf("\$checksum = %s<br />", $checksum);
 			
 			/* Unserialize cookie content */
